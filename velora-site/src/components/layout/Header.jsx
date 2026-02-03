@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { cn } from "../../lib/utils";
 import { Menu, X } from "lucide-react";
 
@@ -15,11 +16,11 @@ const Header = () => {
     }, []);
 
     const navLinks = [
-        { name: "Home", href: "#home" },
-        { name: "About", href: "#about" },
-        { name: "Properties", href: "#properties" },
-        { name: "Blog", href: "#blog" },
-        { name: "Contact", href: "#contact" },
+        { name: "Home", href: "/" },
+        { name: "About", href: "/#about" },
+        { name: "Properties", href: "/#properties" },
+        { name: "Blog", href: "/#blog" },
+        { name: "Contact", href: "/#contact" },
     ];
 
     return (
@@ -31,23 +32,23 @@ const Header = () => {
         >
             <div className="container mx-auto px-6 flex items-center justify-between">
                 {/* Logo */}
-                <a href="/" className="text-2xl font-serif text-white tracking-widest z-50 relative">
+                <Link to="/" className="text-2xl font-serif text-white tracking-widest z-50 relative">
                     VELORA
                     <span className="block text-[10px] font-sans tracking-[0.3em] text-secondary uppercase mt-[-4px]">
                         Properties
                     </span>
-                </a>
+                </Link>
 
                 {/* Desktop Navigation */}
                 <nav className="hidden md:flex items-center gap-8">
                     {navLinks.map((link) => (
-                        <a
+                        <Link
                             key={link.name}
-                            href={link.href}
+                            to={link.href}
                             className="text-white/80 hover:text-primary transition-colors text-sm font-medium"
                         >
                             {link.name}
-                        </a>
+                        </Link>
                     ))}
                 </nav>
 
@@ -71,14 +72,14 @@ const Header = () => {
                 )}>
                     <nav className="flex flex-col items-center gap-6 mb-6">
                         {navLinks.map((link) => (
-                            <a
+                            <Link
                                 key={link.name}
-                                href={link.href}
+                                to={link.href}
                                 onClick={() => setMobileMenuOpen(false)}
                                 className="text-lg font-serif text-white hover:text-primary transition-colors"
                             >
                                 {link.name}
-                            </a>
+                            </Link>
                         ))}
                     </nav>
                     <a

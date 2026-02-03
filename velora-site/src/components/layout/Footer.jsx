@@ -1,4 +1,5 @@
 import { Facebook, Linkedin, Instagram, Twitter } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
     return (
@@ -6,20 +7,19 @@ const Footer = () => {
             <div className="container mx-auto px-6">
                 <div className="flex flex-col md:flex-row justify-between items-center mb-16 gap-8">
                     {/* Logo */}
-                    <a href="/" className="text-3xl font-serif text-dark-blue tracking-widest">
+                    <Link to="/" className="text-3xl font-serif text-dark-blue tracking-widest">
                         VELORA
                         <span className="block text-[11px] font-sans tracking-[0.3em] text-accent uppercase mt-[-4px]">
                             Properties
                         </span>
-                    </a>
+                    </Link>
 
-                    {/* Nav */}
                     <nav className="flex flex-col md:flex-row items-center gap-6 md:gap-8 text-sm font-medium">
-                        <a href="#home" className="hover:text-primary transition-colors">Home</a>
-                        <a href="#about" className="hover:text-primary transition-colors">About</a>
-                        <a href="#properties" className="hover:text-primary transition-colors">Properties</a>
-                        <a href="#blog" className="hover:text-primary transition-colors">Blog</a>
-                        <a href="#contact" className="hover:text-primary transition-colors">Contact</a>
+                        <Link to="/" className="hover:text-primary transition-colors">Home</Link>
+                        <Link to="/#about" className="hover:text-primary transition-colors">About</Link>
+                        <Link to="/#properties" className="hover:text-primary transition-colors">Properties</Link>
+                        <Link to="/#blog" className="hover:text-primary transition-colors">Blog</Link>
+                        <Link to="/#contact" className="hover:text-primary transition-colors">Contact</Link>
                     </nav>
 
                     {/* Socials */}

@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import featuredMain from "../../assets/images/image-1.jpg";
 import prop1 from "../../assets/images/image-2.png";
@@ -41,10 +42,10 @@ const FeaturedProperties = () => {
                             Discover our hand-picked selection of the most prestigious properties available on the market today.
                         </p>
 
-                        <button className="text-white border-b border-primary pb-1 hover:text-primary transition-colors flex items-center gap-2 group">
+                        <Link to="/properties" className="text-white border-b border-primary pb-1 hover:text-primary transition-colors inline-flex items-center gap-2 group">
                             View All Properties
                             <ArrowUpRight className="group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" size={18} />
-                        </button>
+                        </Link>
                     </motion.div>
                 </div>
             </div>
@@ -99,9 +100,9 @@ const FeaturedProperties = () => {
 
                 {/* View All Button Centered at Bottom - Screenshot 05 */}
                 <div className="w-full bg-dark-blue py-16 flex justify-center">
-                    <button className="bg-primary text-dark-blue px-8 py-4 font-medium hover:bg-white transition-colors cursor-pointer">
+                    <Link to="/properties" className="bg-primary text-dark-blue px-8 py-4 font-medium hover:bg-white transition-colors cursor-pointer">
                         View All Properties
-                    </button>
+                    </Link>
                 </div>
             </div>
         </section>
