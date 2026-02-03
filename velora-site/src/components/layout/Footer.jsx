@@ -14,9 +14,10 @@ const Footer = () => {
                     </a>
 
                     {/* Nav */}
-                    <nav className="flex gap-8 text-sm font-medium">
+                    <nav className="flex flex-col md:flex-row items-center gap-6 md:gap-8 text-sm font-medium">
                         <a href="#home" className="hover:text-primary transition-colors">Home</a>
-                        <a href="#properties" className="hover:text-primary transition-colors">Property Listing</a>
+                        <a href="#about" className="hover:text-primary transition-colors">About</a>
+                        <a href="#properties" className="hover:text-primary transition-colors">Properties</a>
                         <a href="#blog" className="hover:text-primary transition-colors">Blog</a>
                         <a href="#contact" className="hover:text-primary transition-colors">Contact</a>
                     </nav>
