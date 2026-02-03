@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Search, ChevronDown, ArrowUpRight } from "lucide-react";
 import Contact from "../components/sections/Contact";
@@ -58,7 +59,39 @@ const propertiesData = [
     },
 ];
 
+const typeOptions = ["All Types", "Penthouse", "Villa", "Apartment", "Townhouse", "Mansion"];
+const cityOptions = ["All Cities", "New York", "Malibu", "Los Angeles", "Chicago", "Miami"];
+
 const Properties = () => {
+    const [activeDropdown, setActiveDropdown] = useState(null); // 'type' or 'city'
+    const [selectedType, setSelectedType] = useState("All Types");
+    const [selectedCity, setSelectedCity] = useState("All Cities");
+    const dropdownRef = useRef(null);
+
+    // Close dropdowns when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setActiveDropdown(null);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+    const toggleDropdown = (type) => {
+        setActiveDropdown(activeDropdown === type ? null : type);
+    };
+
+    const handleSelect = (category, value) => {
+        if (category === 'type') {
+            setSelectedType(value);
+        } else {
+            setSelectedCity(value);
+        }
+        setActiveDropdown(null);
+    };
+
     return (
         <div className="bg-dark-blue min-h-screen text-white">
             {/* Hero Section */}
@@ -89,7 +122,7 @@ const Properties = () => {
             </section>
 
             {/* Filter Bar */}
-            <section className="py-8 bg-dark-blue border-b border-white/10 sticky top-[80px] z-30">
+            <section className="py-8 bg-dark-blue border-b border-white/10 sticky top-[80px] z-30" ref={dropdownRef}>
                 <div className="container mx-auto px-6">
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm md:text-base">
                         {/* Search */}
@@ -102,20 +135,68 @@ const Properties = () => {
                             <Search className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 text-dark-blue" size={18} />
                         </div>
 
-                        {/* Dropdown 1 */}
-                        <div className="relative group col-span-1">
-                            <button className="w-full bg-white text-dark-blue py-3 md:py-4 px-4 md:px-6 flex items-center justify-between overflow-hidden">
-                                <span className="truncate">All Types</span>
-                                <ChevronDown size={18} className="shrink-0 ml-2" />
+                        {/* Dropdown 1: Type */}
+                        <div className="relative col-span-1">
+                            <button
+                                onClick={() => toggleDropdown('type')}
+                                className="w-full bg-white text-dark-blue py-3 md:py-4 px-4 md:px-6 flex items-center justify-between overflow-hidden cursor-pointer"
+                            >
+                                <span className="truncate">{selectedType}</span>
+                                <ChevronDown size={18} className={`transition-transform duration-300 shrink-0 ml-2 ${activeDropdown === 'type' ? 'rotate-180' : ''}`} />
                             </button>
+
+                            <AnimatePresence>
+                                {activeDropdown === 'type' && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: 10 }}
+                                        className="absolute top-full left-0 w-full bg-white border-t border-dark-blue/10 shadow-xl overflow-hidden z-40"
+                                    >
+                                        {typeOptions.map((option) => (
+                                            <button
+                                                key={option}
+                                                onClick={() => handleSelect('type', option)}
+                                                className="w-full text-left px-6 py-3 text-dark-blue hover:bg-primary/10 transition-colors border-b border-dark-blue/5 last:border-none cursor-pointer"
+                                            >
+                                                {option}
+                                            </button>
+                                        ))}
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
 
-                        {/* Dropdown 2 */}
-                        <div className="relative group col-span-1">
-                            <button className="w-full bg-white text-dark-blue py-3 md:py-4 px-4 md:px-6 flex items-center justify-between overflow-hidden">
-                                <span className="truncate">All Cities</span>
-                                <ChevronDown size={18} className="shrink-0 ml-2" />
+                        {/* Dropdown 2: City */}
+                        <div className="relative col-span-1">
+                            <button
+                                onClick={() => toggleDropdown('city')}
+                                className="w-full bg-white text-dark-blue py-3 md:py-4 px-4 md:px-6 flex items-center justify-between overflow-hidden cursor-pointer"
+                            >
+                                <span className="truncate">{selectedCity}</span>
+                                <ChevronDown size={18} className={`transition-transform duration-300 shrink-0 ml-2 ${activeDropdown === 'city' ? 'rotate-180' : ''}`} />
                             </button>
+
+                            <AnimatePresence>
+                                {activeDropdown === 'city' && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: 10 }}
+                                        className="absolute top-full left-0 w-full bg-white border-t border-dark-blue/10 shadow-xl overflow-hidden z-40"
+                                    >
+                                        {cityOptions.map((option) => (
+                                            <button
+                                                key={option}
+                                                onClick={() => handleSelect('city', option)}
+                                                className="w-full text-left px-6 py-3 text-dark-blue hover:bg-primary/10 transition-colors border-b border-dark-blue/5 last:border-none cursor-pointer"
+                                            >
+                                                {option}
+                                            </button>
+                                        ))}
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
                     </div>
                 </div>
@@ -161,8 +242,8 @@ const Properties = () => {
 
                 {/* Pagination */}
                 <div className="container mx-auto px-6 py-20 flex justify-center gap-4">
-                    <button className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-dark-blue bg-white font-serif text-xl border-none">1</button>
-                    <button className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white font-serif text-xl hover:bg-white hover:text-dark-blue transition-colors">2</button>
+                    <button className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-dark-blue bg-white font-serif text-xl border-none cursor-pointer">1</button>
+                    <button className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white font-serif text-xl hover:bg-white hover:text-dark-blue transition-colors cursor-pointer">2</button>
                 </div>
             </section>
 
