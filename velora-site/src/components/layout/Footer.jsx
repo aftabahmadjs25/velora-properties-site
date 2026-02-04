@@ -17,9 +17,9 @@ const Footer = () => {
             <div className="container mx-auto px-6">
                 <div className="flex flex-col md:flex-row justify-between items-center mb-16 gap-8">
                     {/* Logo */}
-                    <Link to="/" className="text-3xl font-serif text-dark-blue tracking-widest">
+                    <Link to="/" className="text-3xl font-serif text-dark-blue tracking-widest text-center">
                         VELORA
-                        <span className="block text-[11px] font-sans tracking-[0.3em] text-accent uppercase mt-[-4px]">
+                        <span className="block text-[11px] font-sans tracking-[0.3em] text-accent uppercase mt-[-4px] text-center w-full">
                             Properties
                         </span>
                     </Link>

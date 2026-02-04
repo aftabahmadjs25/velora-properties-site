@@ -73,9 +73,9 @@ const Header = () => {
         >
             <div className="container mx-auto px-6 flex items-center justify-between">
                 {/* Logo */}
-                <Link to="/" className="text-2xl font-serif text-white tracking-widest z-50 relative">
+                <Link to="/" className="text-2xl font-serif text-white tracking-widest z-50 relative text-center">
                     VELORA
-                    <span className="block text-[10px] font-sans tracking-[0.3em] text-secondary uppercase mt-[-4px]">
+                    <span className="block text-[10px] font-sans tracking-[0.3em] text-secondary uppercase mt-[-4px] text-center w-full">
                         Properties
                     </span>
                 </Link>
