@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { ArrowRight, ArrowLeft } from "lucide-react";
 import heroImage from "../../assets/images/image-0.jpg";
 import preview1 from "../../assets/images/image-1.jpg";
@@ -47,23 +48,23 @@ const Hero = () => {
                     transition={{ duration: 0.8, delay: 0.6 }}
                     className="flex flex-col md:flex-row gap-4 w-full md:w-auto px-4 md:px-0"
                 >
-                    <button className="bg-primary text-dark-blue px-8 py-4 text-sm font-medium hover:bg-white transition-all cursor-pointer w-full md:w-auto min-w-[200px]">
+                    <Link to="/properties" className="bg-primary text-dark-blue px-8 py-4 text-sm font-medium hover:bg-white transition-all cursor-pointer w-full md:w-auto min-w-[200px] flex items-center justify-center">
                         Explore Properties
-                    </button>
-                    <button className="border border-white/30 text-white px-8 py-4 text-sm font-medium hover:bg-white hover:text-dark-blue transition-all cursor-pointer w-full md:w-auto min-w-[200px]">
+                    </Link>
+                    <a href="#contact" className="border border-white/30 text-white px-8 py-4 text-sm font-medium hover:bg-white hover:text-dark-blue transition-all cursor-pointer w-full md:w-auto min-w-[200px] flex items-center justify-center">
                         Get Expert Advice
-                    </button>
+                    </a>
                 </motion.div>
             </div>
 
-            {/* Navigation Arrows */}
-            <div className="absolute top-1/2 left-6 md:left-12 -translate-y-1/2 z-20">
-                <button className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white/50 hover:bg-white hover:text-dark-blue hover:border-white transition-all cursor-pointer backdrop-blur-sm">
+            {/* Navigation Arrows - Hidden on small mobile to avoid layout clutter */}
+            <div className="absolute top-1/2 left-6 md:left-12 -translate-y-1/2 z-20 hidden sm:flex">
+                <button className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/20 flex items-center justify-center text-white/50 hover:bg-white hover:text-dark-blue hover:border-white transition-all cursor-pointer backdrop-blur-sm">
                     <ArrowLeft size={20} />
                 </button>
             </div>
-            <div className="absolute top-1/2 right-6 md:right-12 -translate-y-1/2 z-20">
-                <button className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white/50 hover:bg-white hover:text-dark-blue hover:border-white transition-all cursor-pointer backdrop-blur-sm">
+            <div className="absolute top-1/2 right-6 md:right-12 -translate-y-1/2 z-20 hidden sm:flex">
+                <button className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/20 flex items-center justify-center text-white/50 hover:bg-white hover:text-dark-blue hover:border-white transition-all cursor-pointer backdrop-blur-sm">
                     <ArrowRight size={20} />
                 </button>
             </div>

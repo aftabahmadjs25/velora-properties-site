@@ -16,7 +16,14 @@ const Properties = () => {
     const [selectedType, setSelectedType] = useState("All Types");
     const [selectedCity, setSelectedCity] = useState("All Cities");
     const [searchQuery, setSearchQuery] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 4;
     const dropdownRef = useRef(null);
+
+    // Reset page when filters change
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [selectedType, selectedCity, searchQuery]);
 
     // Close dropdowns when clicking outside
     useEffect(() => {
@@ -51,6 +58,12 @@ const Properties = () => {
 
         return matchesType && matchesCity && matchesSearch;
     });
+
+    // Pagination Logic
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = filteredProperties.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(filteredProperties.length / itemsPerPage);
 
     return (
         <div className="bg-dark-blue min-h-screen text-white">
@@ -165,10 +178,10 @@ const Properties = () => {
             </section>
 
             {/* Property List */}
-            <section className="py-20 bg-dark-blue/50 min-h-[600px]">
+            <section className="py-20 bg-dark-blue/50 min-h-[600px]" id="properties-list">
                 <div className="container mx-auto px-6 space-y-20">
-                    {filteredProperties.length > 0 ? (
-                        filteredProperties.map((item) => (
+                    {currentItems.length > 0 ? (
+                        currentItems.map((item) => (
                             <motion.div
                                 key={item.id}
                                 initial={{ opacity: 0, y: 40 }}
@@ -220,10 +233,23 @@ const Properties = () => {
                 </div>
 
                 {/* Pagination */}
-                {filteredProperties.length > 0 && (
+                {totalPages > 1 && (
                     <div className="container mx-auto px-6 py-20 flex justify-center gap-4">
-                        <button className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-dark-blue bg-white font-serif text-xl border-none cursor-pointer">1</button>
-                        <button className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white font-serif text-xl hover:bg-white hover:text-dark-blue transition-colors cursor-pointer">2</button>
+                        {[...Array(totalPages)].map((_, idx) => (
+                            <button
+                                key={idx + 1}
+                                onClick={() => {
+                                    setCurrentPage(idx + 1);
+                                    document.getElementById('properties-list')?.scrollIntoView({ behavior: 'smooth' });
+                                }}
+                                className={`w-12 h-12 rounded-full border flex items-center justify-center font-serif text-xl transition-all cursor-pointer ${currentPage === idx + 1
+                                    ? "bg-white text-dark-blue border-transparent shadow-lg"
+                                    : "text-white border-white/20 hover:bg-white hover:text-dark-blue"
+                                    }`}
+                            >
+                                {idx + 1}
+                            </button>
+                        ))}
                     </div>
                 )}
             </section>

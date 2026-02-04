@@ -15,6 +15,11 @@ const Header = () => {
         };
         window.addEventListener("scroll", handleScroll);
 
+        // Clear active section if not on home page
+        if (location.pathname !== "/") {
+            setActiveSection("");
+        }
+
         // Scroll Spy Logic
         const observerOptions = {
             root: null,
@@ -33,14 +38,16 @@ const Header = () => {
         const observer = new IntersectionObserver(observerCallback, observerOptions);
         const sections = ['about', 'properties', 'blog', 'contact'];
 
-        sections.forEach(id => {
-            const element = document.getElementById(id);
-            if (element) observer.observe(element);
-        });
+        if (location.pathname === "/") {
+            sections.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) observer.observe(element);
+            });
+        }
 
         // Handle Home section (Hero) separately if needed, or if scroll is at top
         const handleHomeActive = () => {
-            if (window.scrollY < 100) {
+            if (location.pathname === "/" && window.scrollY < 100) {
                 setActiveSection("");
             }
         };
@@ -49,12 +56,9 @@ const Header = () => {
         return () => {
             window.removeEventListener("scroll", handleScroll);
             window.removeEventListener("scroll", handleHomeActive);
-            sections.forEach(id => {
-                const element = document.getElementById(id);
-                if (element) observer.unobserve(element);
-            });
+            observer.disconnect();
         };
-    }, []);
+    }, [location.pathname]);
 
     const navLinks = [
         { name: "Home", href: "/", id: "" },

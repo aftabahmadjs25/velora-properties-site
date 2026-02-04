@@ -89,7 +89,7 @@ const FeaturedProperties = () => {
                                 <h3 className="font-serif text-3xl md:text-4xl">Coastal Modern Villa</h3>
                                 <div className="text-right">
                                     <span className="font-serif text-2xl md:text-3xl block mb-2">$12,750,000</span>
-                                    <Link to="/property/skyline-penthouse-2" className="flex items-center gap-2 text-sm uppercase tracking-wider hover:text-primary transition-colors border border-white/30 rounded-full px-4 py-2 hover:bg-white hover:text-dark-blue cursor-pointer">
+                                    <Link to="/property/coastal-modern-villa" className="flex items-center gap-2 text-sm uppercase tracking-wider hover:text-primary transition-colors border border-white/30 rounded-full px-4 py-2 hover:bg-white hover:text-dark-blue cursor-pointer">
                                         View Details <ArrowUpRight size={14} />
                                     </Link>
                                 </div>

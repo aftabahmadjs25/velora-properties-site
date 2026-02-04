@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useSearchParams } from "react-router-dom";
 import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
@@ -13,6 +13,9 @@ const Blog = () => {
     const query = searchParams.get("search") || "";
     const categoryQuery = searchParams.get("category") || "All";
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 4;
+
     const filteredBlogs = useMemo(() => {
         return blogsData.filter((blog) => {
             const matchesSearch = blog.title.toLowerCase().includes(query.toLowerCase()) ||
@@ -21,6 +24,22 @@ const Blog = () => {
             return matchesSearch && matchesCategory;
         });
     }, [query, categoryQuery]);
+
+    // Reset page when filters change
+    const [prevQuery, setPrevQuery] = useState(query);
+    const [prevCategory, setPrevCategory] = useState(categoryQuery);
+
+    if (query !== prevQuery || categoryQuery !== prevCategory) {
+        setCurrentPage(1);
+        setPrevQuery(query);
+        setPrevCategory(categoryQuery);
+    }
+
+    // Pagination Logic
+    const indexOfLastPost = currentPage * itemsPerPage;
+    const indexOfFirstPost = indexOfLastPost - itemsPerPage;
+    const currentPosts = filteredBlogs.slice(indexOfFirstPost, indexOfLastPost);
+    const totalPages = Math.ceil(filteredBlogs.length / itemsPerPage);
 
     return (
         <div className="bg-white min-h-screen text-dark-blue">
@@ -52,11 +71,11 @@ const Blog = () => {
             </section>
 
             {/* Blog Grid */}
-            <section className="py-20 lg:py-32">
+            <section className="py-20 lg:py-32" id="blog-grid">
                 <div className="container mx-auto px-6">
-                    {filteredBlogs.length > 0 ? (
+                    {currentPosts.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
-                            {filteredBlogs.map((post, index) => (
+                            {currentPosts.map((post, index) => (
                                 <motion.div
                                     key={post.id}
                                     initial={{ opacity: 0, y: 30 }}
@@ -112,15 +131,43 @@ const Blog = () => {
                     )}
 
                     {/* Pagination */}
-                    {filteredBlogs.length > 0 && (
+                    {totalPages > 1 && (
                         <div className="mt-24 flex justify-center items-center gap-4">
-                            <button className="text-dark-blue/30 hover:text-primary transition-colors">
+                            <button
+                                onClick={() => {
+                                    setCurrentPage(prev => Math.max(prev - 1, 1));
+                                    document.getElementById('blog-grid')?.scrollIntoView({ behavior: 'smooth' });
+                                }}
+                                disabled={currentPage === 1}
+                                className={`text-dark-blue/30 transition-colors ${currentPage === 1 ? 'opacity-50' : 'hover:text-primary'}`}
+                            >
                                 <ChevronLeft size={24} />
                             </button>
-                            <button className="w-10 h-10 rounded-full bg-dark-blue text-white flex items-center justify-center font-serif text-lg">1</button>
-                            <button className="w-10 h-10 rounded-full border border-dark-blue/10 flex items-center justify-center font-serif text-lg hover:bg-dark-blue hover:text-white transition-all">2</button>
-                            <button className="w-10 h-10 rounded-full border border-dark-blue/10 flex items-center justify-center font-serif text-lg hover:bg-dark-blue hover:text-white transition-all">3</button>
-                            <button className="text-dark-blue hover:text-primary transition-colors">
+
+                            {[...Array(totalPages)].map((_, idx) => (
+                                <button
+                                    key={idx + 1}
+                                    onClick={() => {
+                                        setCurrentPage(idx + 1);
+                                        document.getElementById('blog-grid')?.scrollIntoView({ behavior: 'smooth' });
+                                    }}
+                                    className={`w-10 h-10 rounded-full font-serif text-lg transition-all ${currentPage === idx + 1
+                                        ? "bg-dark-blue text-white shadow-lg"
+                                        : "border border-dark-blue/10 hover:bg-dark-blue hover:text-white"
+                                        }`}
+                                >
+                                    {idx + 1}
+                                </button>
+                            ))}
+
+                            <button
+                                onClick={() => {
+                                    setCurrentPage(prev => Math.min(prev + 1, totalPages));
+                                    document.getElementById('blog-grid')?.scrollIntoView({ behavior: 'smooth' });
+                                }}
+                                disabled={currentPage === totalPages}
+                                className={`text-dark-blue/30 transition-colors ${currentPage === totalPages ? 'opacity-50' : 'hover:text-primary'}`}
+                            >
                                 <ChevronRight size={24} />
                             </button>
                         </div>
