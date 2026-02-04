@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react";
 const Header = () => {
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [activeSection, setActiveSection] = useState("");
     const location = useLocation();
 
     useEffect(() => {
@@ -13,15 +14,54 @@ const Header = () => {
             setScrolled(window.scrollY > 50);
         };
         window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
+
+        // Scroll Spy Logic
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -70% 0px',
+            threshold: 0
+        };
+
+        const observerCallback = (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    setActiveSection(entry.target.id);
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(observerCallback, observerOptions);
+        const sections = ['about', 'properties', 'blog', 'contact'];
+
+        sections.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) observer.observe(element);
+        });
+
+        // Handle Home section (Hero) separately if needed, or if scroll is at top
+        const handleHomeActive = () => {
+            if (window.scrollY < 100) {
+                setActiveSection("");
+            }
+        };
+        window.addEventListener("scroll", handleHomeActive);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            window.removeEventListener("scroll", handleHomeActive);
+            sections.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) observer.unobserve(element);
+            });
+        };
     }, []);
 
     const navLinks = [
-        { name: "Home", href: "/" },
-        { name: "About", href: "/#about" },
-        { name: "Properties", href: "/#properties" },
-        { name: "Blog", href: "/#blog" },
-        { name: "Contact", href: "/#contact" },
+        { name: "Home", href: "/", id: "" },
+        { name: "About", href: "/#about", id: "about" },
+        { name: "Properties", href: "/#properties", id: "properties" },
+        { name: "Blog", href: "/#blog", id: "blog" },
+        { name: "Contact", href: "/#contact", id: "contact" },
     ];
 
     return (
@@ -43,9 +83,30 @@ const Header = () => {
                 {/* Desktop Navigation */}
                 <nav className="hidden md:flex items-center gap-8">
                     {navLinks.map((link) => {
-                        const isActive = link.href.startsWith("/#")
-                            ? (location.pathname === "/" && location.hash === link.href.substring(1))
-                            : (location.pathname === link.href && (link.href !== "/" || location.hash === ""));
+                        const isProperties = link.name === "Properties";
+                        const isBlog = link.name === "Blog";
+
+                        // Priority 1: Scroll-spy active section (for Home page)
+                        let isActive = location.pathname === "/" && activeSection === link.id;
+
+                        // Priority 2: Dedicated pages/subpaths logic
+                        if (!isActive) {
+                            if (link.href === "/") {
+                                isActive = location.pathname === "/" && location.hash === "" && activeSection === "";
+                            } else if (link.href.startsWith("/#")) {
+                                // Check if we are on the dedicated archive/detail pages
+                                if (isProperties && (location.pathname.startsWith("/properties") || location.pathname.startsWith("/property"))) {
+                                    isActive = true;
+                                }
+                                if (isBlog && location.pathname.startsWith("/blog")) {
+                                    isActive = true;
+                                }
+                                // Fallback for manual hash navigation
+                                if (!isActive) {
+                                    isActive = location.pathname === "/" && location.hash === link.href.substring(1);
+                                }
+                            }
+                        }
 
                         return (
                             <NavLink
@@ -82,9 +143,26 @@ const Header = () => {
                 )}>
                     <nav className="flex flex-col items-center gap-6 mb-6">
                         {navLinks.map((link) => {
-                            const isActive = link.href.startsWith("/#")
-                                ? (location.pathname === "/" && location.hash === link.href.substring(1))
-                                : (location.pathname === link.href && (link.href !== "/" || location.hash === ""));
+                            const isProperties = link.name === "Properties";
+                            const isBlog = link.name === "Blog";
+
+                            let isActive = location.pathname === "/" && activeSection === link.id;
+
+                            if (!isActive) {
+                                if (link.href === "/") {
+                                    isActive = location.pathname === "/" && location.hash === "" && activeSection === "";
+                                } else if (link.href.startsWith("/#")) {
+                                    if (isProperties && (location.pathname.startsWith("/properties") || location.pathname.startsWith("/property"))) {
+                                        isActive = true;
+                                    }
+                                    if (isBlog && location.pathname.startsWith("/blog")) {
+                                        isActive = true;
+                                    }
+                                    if (!isActive) {
+                                        isActive = location.pathname === "/" && location.hash === link.href.substring(1);
+                                    }
+                                }
+                            }
 
                             return (
                                 <NavLink
