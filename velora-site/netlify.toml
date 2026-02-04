@@ -13,6 +13,7 @@
   to = "/index.html"
   status = 200
 
-# Optional: Set Node version
+# Set Node version to 20 (LTS)
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "20"
+  NPM_FLAGS = "--legacy-peer-deps"
