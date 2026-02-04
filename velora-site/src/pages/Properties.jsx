@@ -3,61 +3,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Search, ChevronDown, ArrowUpRight } from "lucide-react";
 import Contact from "../components/sections/Contact";
-
-// Import images
 import heroBg from "../assets/images/image-0.jpg";
-import prop1 from "../assets/images/image-1.jpg";
-import prop2 from "../assets/images/image-2.png";
-import prop2a from "../assets/images/image-3.jpg";
-import prop3 from "../assets/images/image-4.jpg";
-import prop4 from "../assets/images/image-5.png";
-import prop5 from "../assets/images/image-6.jpg";
-import prop6 from "../assets/images/image-7.jpg";
 
-const propertiesData = [
-    {
-        id: 1,
-        title: "The Skyline Penthouse",
-        location: "Malibu, California",
-        price: "$8,500,000",
-        image: prop2,
-    },
-    {
-        id: 2,
-        title: "The Skyline Penthouse",
-        location: "Malibu, California",
-        price: "$8,500,000",
-        image: prop2a,
-    },
-    {
-        id: 3,
-        title: "Historic Brownstone",
-        location: "Brooklyn Heights, NY",
-        price: "$8,500,000",
-        image: prop3,
-    },
-    {
-        id: 4,
-        title: "Historic Brownstone",
-        location: "Brooklyn Heights, NY",
-        price: "$8,500,000",
-        image: prop4,
-    },
-    {
-        id: 5,
-        title: "Historic Brownstone",
-        location: "Brooklyn Heights, NY",
-        price: "$8,500,000",
-        image: prop5,
-    },
-    {
-        id: 6,
-        title: "Historic Brownstone",
-        location: "Brooklyn Heights, NY",
-        price: "$8,500,000",
-        image: prop6,
-    },
-];
+// Import data
+import { propertiesData } from "../data/properties";
 
 const typeOptions = ["All Types", "Penthouse", "Villa", "Apartment", "Townhouse", "Mansion"];
 const cityOptions = ["All Cities", "New York", "Malibu", "Los Angeles", "Chicago", "Miami"];
@@ -95,7 +44,7 @@ const Properties = () => {
 
     // Filtering Logic
     const filteredProperties = propertiesData.filter((item) => {
-        const matchesType = selectedType === "All Types" || item.title.toLowerCase().includes(selectedType.toLowerCase());
+        const matchesType = selectedType === "All Types" || item.type.toLowerCase().includes(selectedType.toLowerCase());
         const matchesCity = selectedCity === "All Cities" || item.location.toLowerCase().includes(selectedCity.toLowerCase());
         const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             item.location.toLowerCase().includes(searchQuery.toLowerCase());
@@ -219,7 +168,7 @@ const Properties = () => {
             <section className="py-20 bg-dark-blue/50 min-h-[600px]">
                 <div className="container mx-auto px-6 space-y-20">
                     {filteredProperties.length > 0 ? (
-                        filteredProperties.map((item, index) => (
+                        filteredProperties.map((item) => (
                             <motion.div
                                 key={item.id}
                                 initial={{ opacity: 0, y: 40 }}
@@ -244,9 +193,9 @@ const Properties = () => {
 
                                         <div className="text-left md:text-right">
                                             <span className="font-serif text-3xl md:text-5xl block mb-2 md:mb-4">{item.price}</span>
-                                            <button className="flex items-center gap-2 text-sm uppercase tracking-wider hover:text-primary transition-colors group/btn">
+                                            <Link to={`/property/${item.id}`} className="flex items-center gap-2 text-sm uppercase tracking-wider hover:text-primary transition-colors group/btn cursor-pointer">
                                                 View Details <ArrowUpRight className="group-hover/btn:-translate-y-1 transition-transform" size={16} />
-                                            </button>
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>

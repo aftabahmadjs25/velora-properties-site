@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { cn } from "../../lib/utils";
 import { Menu, X } from "lucide-react";
 
 const Header = () => {
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const location = useLocation();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -41,15 +42,24 @@ const Header = () => {
 
                 {/* Desktop Navigation */}
                 <nav className="hidden md:flex items-center gap-8">
-                    {navLinks.map((link) => (
-                        <Link
-                            key={link.name}
-                            to={link.href}
-                            className="text-white/80 hover:text-primary transition-colors text-sm font-medium"
-                        >
-                            {link.name}
-                        </Link>
-                    ))}
+                    {navLinks.map((link) => {
+                        const isActive = link.href.startsWith("/#")
+                            ? (location.pathname === "/" && location.hash === link.href.substring(1))
+                            : (location.pathname === link.href && (link.href !== "/" || location.hash === ""));
+
+                        return (
+                            <NavLink
+                                key={link.name}
+                                to={link.href}
+                                className={cn(
+                                    "transition-colors text-sm font-medium border-b-2 border-transparent pb-1",
+                                    isActive ? "text-primary border-primary" : "text-white/80 hover:text-primary"
+                                )}
+                            >
+                                {link.name}
+                            </NavLink>
+                        );
+                    })}
                 </nav>
 
                 {/* Desktop CTA Button */}
@@ -71,16 +81,25 @@ const Header = () => {
                     mobileMenuOpen ? "max-h-[500px] opacity-100 py-6" : "max-h-0 opacity-0 py-0"
                 )}>
                     <nav className="flex flex-col items-center gap-6 mb-6">
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.name}
-                                to={link.href}
-                                onClick={() => setMobileMenuOpen(false)}
-                                className="text-lg font-serif text-white hover:text-primary transition-colors"
-                            >
-                                {link.name}
-                            </Link>
-                        ))}
+                        {navLinks.map((link) => {
+                            const isActive = link.href.startsWith("/#")
+                                ? (location.pathname === "/" && location.hash === link.href.substring(1))
+                                : (location.pathname === link.href && (link.href !== "/" || location.hash === ""));
+
+                            return (
+                                <NavLink
+                                    key={link.name}
+                                    to={link.href}
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    className={cn(
+                                        "text-lg font-serif transition-colors",
+                                        isActive ? "text-primary italic" : "text-white hover:text-primary"
+                                    )}
+                                >
+                                    {link.name}
+                                </NavLink>
+                            );
+                        })}
                     </nav>
                     <a
                         href="#contact"

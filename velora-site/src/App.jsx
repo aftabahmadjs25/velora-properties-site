@@ -4,6 +4,7 @@ import Footer from './components/layout/Footer';
 import ScrollToTop from './components/layout/ScrollToTop';
 import Home from './pages/Home';
 import Properties from './pages/Properties';
+import PropertyDetails from './pages/PropertyDetails';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/properties" element={<Properties />} />
+          <Route path="/property/:id" element={<PropertyDetails />} />
         </Routes>
       </main>
       <Footer />

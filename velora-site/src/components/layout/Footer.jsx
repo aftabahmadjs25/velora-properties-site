@@ -1,7 +1,17 @@
 import { Facebook, Linkedin, Instagram, Twitter } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 
 const Footer = () => {
+    const location = useLocation();
+
+    const getActiveStyles = (href) => {
+        const isActive = href.startsWith("/#")
+            ? (location.pathname === "/" && location.hash === href.substring(1))
+            : (location.pathname === href && (href !== "/" || location.hash === ""));
+
+        return isActive ? "text-primary transition-colors" : "hover:text-primary transition-colors";
+    };
+
     return (
         <footer className="bg-[#EAE8E4] text-dark-blue pt-20 pb-10">
             <div className="container mx-auto px-6">
@@ -15,11 +25,11 @@ const Footer = () => {
                     </Link>
 
                     <nav className="flex flex-col md:flex-row items-center gap-6 md:gap-8 text-sm font-medium">
-                        <Link to="/" className="hover:text-primary transition-colors">Home</Link>
-                        <Link to="/#about" className="hover:text-primary transition-colors">About</Link>
-                        <Link to="/#properties" className="hover:text-primary transition-colors">Properties</Link>
-                        <Link to="/#blog" className="hover:text-primary transition-colors">Blog</Link>
-                        <Link to="/#contact" className="hover:text-primary transition-colors">Contact</Link>
+                        <NavLink to="/" className={getActiveStyles("/")}>Home</NavLink>
+                        <NavLink to="/#about" className={getActiveStyles("/#about")}>About</NavLink>
+                        <NavLink to="/#properties" className={getActiveStyles("/#properties")}>Properties</NavLink>
+                        <NavLink to="/#blog" className={getActiveStyles("/#blog")}>Blog</NavLink>
+                        <NavLink to="/#contact" className={getActiveStyles("/#contact")}>Contact</NavLink>
                     </nav>
 
                     {/* Socials */}
