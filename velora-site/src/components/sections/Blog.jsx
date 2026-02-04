@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import blog1 from "../../assets/images/image-6.jpg";
 import blog2 from "../../assets/images/image-7.jpg";
@@ -39,25 +40,29 @@ const Blog = () => {
                             transition={{ duration: 0.8, delay: index * 0.2 }}
                             className="group cursor-pointer"
                         >
-                            <div className="overflow-hidden mb-6 h-[400px] w-full">
-                                <img
-                                    src={post.image}
-                                    alt={post.title}
-                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                />
-                            </div>
+                            <Link to="/blog">
+                                <div className="overflow-hidden mb-6 h-[400px] w-full shadow-lg">
+                                    <img
+                                        src={post.image}
+                                        alt={post.title}
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                    />
+                                </div>
+                            </Link>
 
                             <div className="flex justify-between items-start gap-4">
-                                <div>
-                                    <h3 className="font-serif text-2xl lg:text-3xl mb-3 leading-tight group-hover:text-primary transition-colors">
-                                        {post.title}
-                                    </h3>
-                                    <span className="text-sm text-accent">{post.date}</span>
-                                </div>
+                                <Link to="/blog" className="flex-1">
+                                    <div>
+                                        <h3 className="font-serif text-2xl lg:text-3xl mb-3 leading-tight group-hover:text-primary transition-colors">
+                                            {post.title}
+                                        </h3>
+                                        <span className="text-sm text-accent">{post.date}</span>
+                                    </div>
+                                </Link>
 
-                                <button className="w-10 h-10 rounded-full bg-dark-blue text-white flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-dark-blue transition-colors">
+                                <Link to="/blog" className="w-10 h-10 rounded-full bg-dark-blue text-white flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-dark-blue transition-all duration-300 group-hover:-translate-y-1">
                                     <ArrowUpRight size={18} />
-                                </button>
+                                </Link>
                             </div>
                         </motion.div>
                     ))}
