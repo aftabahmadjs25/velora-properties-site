@@ -1,0 +1,18 @@
+# Netlify Configuration for Velora Properties Site
+
+[build]
+  # Build command
+  command = "npm run build"
+  
+  # Directory with the production build
+  publish = "dist"
+
+# Redirect all routes to index.html for client-side routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Optional: Set Node version
+[build.environment]
+  NODE_VERSION = "18"
