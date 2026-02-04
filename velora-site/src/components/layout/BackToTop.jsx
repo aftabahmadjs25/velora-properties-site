@@ -33,7 +33,7 @@ const BackToTop = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 20 }}
                     onClick={scrollToTop}
-                    className="fixed bottom-8 right-8 z-[60] bg-primary text-dark-blue p-3 shadow-2xl hover:bg-white transition-all cursor-pointer group rounded-sm"
+                    className="fixed bottom-8 right-8 z-[60] bg-white/10 backdrop-blur-md border border-white/20 text-white p-3 shadow-2xl hover:bg-primary hover:text-dark-blue hover:border-transparent transition-all cursor-pointer group rounded-sm"
                     aria-label="Back to top"
                 >
                     <ChevronUp size={24} className="group-hover:-translate-y-1 transition-transform" />
