@@ -60,9 +60,10 @@ const BlogDetails = () => {
 
                 <div className="container relative z-10 mx-auto px-6 text-center">
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
+                        initial={{ opacity: 0, x: -100 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: false, amount: 0.3 }}
+                        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
                     >
                         <div className="flex items-center justify-center gap-2 text-primary text-sm uppercase tracking-widest mb-4">
                             <Link to="/" className="hover:text-white transition-colors">Home</Link>
@@ -71,7 +72,7 @@ const BlogDetails = () => {
                             <span>/</span>
                             <span className="text-white/60 text-sm">{blog.title}</span>
                         </div>
-                        <h1 className="font-serif text-6xl md:text-8xl text-white">Blog</h1>
+                        <h1 className="font-serif text-5xl md:text-7xl text-white">Blog</h1>
                     </motion.div>
                 </div>
             </section>
@@ -119,67 +120,107 @@ const BlogDetails = () => {
 
                     {/* Left: Article Content */}
                     <div className="lg:col-span-8">
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8 }}
+                        <motion.h2
+                            initial={{ opacity: 0, x: -100 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: false, amount: 0.2 }}
+                            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                            className="font-serif text-3xl md:text-4xl lg:text-5xl mb-10 leading-tight"
                         >
-                            <h2 className="font-serif text-4xl md:text-5xl lg:text-7xl mb-12 leading-tight">
-                                {blog.title}
-                            </h2>
+                            {blog.title}
+                        </motion.h2>
 
-                            {/* Main Featured Image */}
-                            <div className="w-full h-[400px] md:h-[650px] mb-12 overflow-hidden shadow-2xl rounded-sm">
-                                <img
-                                    src={blog.image}
-                                    alt={blog.title}
-                                    className="w-full h-full object-cover"
-                                />
-                            </div>
+                        {/* Main Featured Image - No pull-in, maybe just fade */}
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            viewport={{ once: false, amount: 0.2 }}
+                            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                            className="w-full h-[400px] md:h-[650px] mb-12 overflow-hidden shadow-2xl rounded-sm"
+                        >
+                            <img
+                                src={blog.image}
+                                alt={blog.title}
+                                className="w-full h-full object-cover"
+                            />
+                        </motion.div>
 
-                            {/* Meta Info */}
-                            <div className="flex flex-wrap items-center gap-8 mb-16 border-b border-dark-blue/10 pb-12">
-                                <div className="flex items-center gap-4">
-                                    <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-primary/20 shadow-sm">
-                                        <img
-                                            src={blog.author?.image || "https://randomuser.me/api/portraits/men/1.jpg"}
-                                            alt={blog.author?.name}
-                                            className="w-full h-full object-cover"
-                                        />
-                                    </div>
-                                    <div>
-                                        <p className="font-serif text-xl leading-tight text-dark-blue">{blog.author?.name}</p>
-                                        <p className="text-xs uppercase tracking-widest text-dark-blue/50 font-medium">{blog.author?.role}</p>
-                                    </div>
+                        {/* Meta Info - Pull in */}
+                        <motion.div
+                            initial={{ opacity: 0, x: -100 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: false, amount: 0.2 }}
+                            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                            className="flex flex-wrap items-center gap-8 mb-16 border-b border-dark-blue/10 pb-12"
+                        >
+                            <div className="flex items-center gap-4">
+                                <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-primary/20 shadow-sm">
+                                    <img
+                                        src={blog.author?.image || "https://randomuser.me/api/portraits/men/1.jpg"}
+                                        alt={blog.author?.name}
+                                        className="w-full h-full object-cover"
+                                    />
                                 </div>
-                                <div className="flex items-center gap-4 text-dark-blue">
-                                    <div className="p-3.5 bg-dark-blue text-white rounded-md shadow-lg shadow-dark-blue/20">
-                                        <Calendar size={22} />
-                                    </div>
-                                    <span className="font-serif text-xl italic">{blog.date}</span>
+                                <div>
+                                    <p className="font-serif text-lg leading-tight text-dark-blue">{blog.author?.name}</p>
+                                    <p className="text-[10px] uppercase tracking-widest text-dark-blue/50 font-medium">{blog.author?.role}</p>
                                 </div>
                             </div>
-
-                            {/* Article Body */}
-                            <div className="prose prose-lg max-w-none text-dark-blue/70 leading-relaxed font-sans space-y-10 text-lg">
-                                {blog.content ? (
-                                    blog.content.split('\n\n').map((paragraph, idx) => {
-                                        if (paragraph.trim().startsWith('##')) {
-                                            return <h3 key={idx} className="font-serif text-4xl text-dark-blue pt-6 mb-4">{paragraph.replace('## ', '')}</h3>
-                                        }
-                                        return <p key={idx} className="leading-[1.8]">{paragraph.trim()}</p>
-                                    })
-                                ) : (
-                                    <p>Coming soon...</p>
-                                )}
+                            <div className="flex items-center gap-4 text-dark-blue">
+                                <div className="p-3 bg-dark-blue text-white rounded-md shadow-lg shadow-dark-blue/20">
+                                    <Calendar size={18} />
+                                </div>
+                                <span className="font-serif text-lg italic">{blog.date}</span>
                             </div>
                         </motion.div>
+
+                        {/* Article Body */}
+                        <div className="prose prose-base max-w-none text-dark-blue/70 leading-relaxed font-sans space-y-8 text-base">
+                            {blog.content ? (
+                                blog.content.split('\n\n').map((paragraph, idx) => {
+                                    if (paragraph.trim().startsWith('##')) {
+                                        return (
+                                            <motion.h3
+                                                key={idx}
+                                                initial={{ opacity: 0, x: -50 }}
+                                                whileInView={{ opacity: 1, x: 0 }}
+                                                viewport={{ once: false, amount: 0.5 }}
+                                                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                                                className="font-serif text-3xl text-dark-blue pt-4 mb-3"
+                                            >
+                                                {paragraph.replace('## ', '')}
+                                            </motion.h3>
+                                        )
+                                    }
+                                    return (
+                                        <motion.p
+                                            key={idx}
+                                            initial={{ opacity: 0, x: -50 }}
+                                            whileInView={{ opacity: 1, x: 0 }}
+                                            viewport={{ once: false, amount: 0.2 }}
+                                            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                                            className="leading-[1.8]"
+                                        >
+                                            {paragraph.trim()}
+                                        </motion.p>
+                                    )
+                                })
+                            ) : (
+                                <p>Coming soon...</p>
+                            )}
+                        </div>
                     </div>
 
                     {/* Right: Sidebar */}
                     <aside className="lg:col-span-4 space-y-16">
                         {/* Desktop Search - Hidden on Mobile */}
-                        <div className="hidden lg:block">
+                        <motion.div
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: false, amount: 0.3 }}
+                            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                            className="hidden lg:block"
+                        >
                             <form onSubmit={handleSearch} className="relative group bg-white shadow-2xl border border-dark-blue/5 p-1 rounded-sm">
                                 <input
                                     type="text"
@@ -192,14 +233,29 @@ const BlogDetails = () => {
                                     <Search size={20} />
                                 </button>
                             </form>
-                        </div>
+                        </motion.div>
 
                         {/* Desktop Categories - Hidden on Mobile */}
                         <div className="hidden lg:block">
-                            <h4 className="font-serif text-3xl mb-8 border-b border-dark-blue/10 pb-5">Categories</h4>
+                            <motion.h4
+                                initial={{ opacity: 0, x: 50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: false, amount: 0.3 }}
+                                transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+                                className="font-serif text-2xl mb-6 border-b border-dark-blue/10 pb-4"
+                            >
+                                Categories
+                            </motion.h4>
                             <ul className="space-y-4">
                                 {categories.map((cat, idx) => (
-                                    <li key={idx} className="border-b border-dark-blue/5 pb-2">
+                                    <motion.li
+                                        key={idx}
+                                        initial={{ opacity: 0, x: 50 }}
+                                        whileInView={{ opacity: 1, x: 0 }}
+                                        viewport={{ once: false, amount: 0.3 }}
+                                        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.1 + (idx * 0.05) }}
+                                        className="border-b border-dark-blue/5 pb-2"
+                                    >
                                         <button
                                             onClick={() => handleCategoryClick(cat)}
                                             className="text-dark-blue/60 hover:text-primary transition-all hover:translate-x-2 inline-flex items-center gap-3 text-lg font-medium group"
@@ -207,37 +263,59 @@ const BlogDetails = () => {
                                             <div className="w-1.5 h-1.5 rounded-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity" />
                                             {cat}
                                         </button>
-                                    </li>
+                                    </motion.li>
                                 ))}
                             </ul>
                         </div>
 
                         {/* Related Posts */}
                         <div>
-                            <h4 className="font-serif text-3xl mb-10 border-b border-dark-blue/10 pb-5">Related Posts</h4>
+                            <motion.h4
+                                initial={{ opacity: 0, x: 50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: false, amount: 0.3 }}
+                                transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+                                className="font-serif text-2xl mb-8 border-b border-dark-blue/10 pb-4"
+                            >
+                                Related Posts
+                            </motion.h4>
                             <div className="space-y-10">
-                                {relatedPosts.map((post) => (
-                                    <Link key={post.id} to={`/blog/${post.id}`} className="flex gap-6 group items-center">
-                                        <div className="w-24 h-24 shrink-0 overflow-hidden shadow-md rounded-sm">
-                                            <img
-                                                src={post.image}
-                                                alt={post.title}
-                                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                            />
-                                        </div>
-                                        <div>
-                                            <p className="text-xs text-primary mb-2 uppercase tracking-widest font-bold">{post.date}</p>
-                                            <h5 className="font-serif text-lg leading-snug group-hover:text-primary transition-colors">
-                                                {post.title}
-                                            </h5>
-                                        </div>
-                                    </Link>
+                                {relatedPosts.map((post, idx) => (
+                                    <motion.div
+                                        key={post.id}
+                                        initial={{ opacity: 0, x: 50 }}
+                                        whileInView={{ opacity: 1, x: 0 }}
+                                        viewport={{ once: false, amount: 0.2 }}
+                                        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 + (idx * 0.1) }}
+                                    >
+                                        <Link to={`/blog/${post.id}`} className="flex gap-6 group items-center">
+                                            <div className="w-24 h-24 shrink-0 overflow-hidden shadow-md rounded-sm">
+                                                <img
+                                                    src={post.image}
+                                                    alt={post.title}
+                                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                                />
+                                            </div>
+                                            <div>
+                                                <p className="text-xs text-primary mb-2 uppercase tracking-widest font-bold">{post.date}</p>
+                                                <h5 className="font-serif text-base leading-snug group-hover:text-primary transition-colors">
+                                                    {post.title}
+                                                </h5>
+                                            </div>
+                                        </Link>
+                                    </motion.div>
                                 ))}
                             </div>
                         </div>
 
                         {/* Stay Connected Box */}
-                        <div className="bg-dark-blue p-8 text-white rounded-sm shadow-xl">
+                        <motion.div
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: false, amount: 0.3 }}
+                            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+                            className="bg-dark-blue p-8 text-white rounded-sm shadow-xl"
+                        >
                             <h4 className="font-serif text-2xl mb-4 text-primary">Stay Connected</h4>
                             <p className="text-white/60 text-sm mb-8 leading-relaxed">Subscribe to our monthly newsletter for exclusive property insights and luxury market updates.</p>
                             <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
@@ -250,37 +328,51 @@ const BlogDetails = () => {
                                     Subscribe Now
                                 </button>
                             </form>
-                        </div>
+                        </motion.div>
                     </aside>
 
                 </div>
 
                 {/* Bottom Featured Posts */}
-                <div className="mt-40 pt-20 border-t border-dark-blue/10">
-                    <h3 className="font-serif text-4xl mb-16 text-center">More From Our Blog</h3>
+                <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: false, amount: 0.1 }}
+                    transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                    className="mt-40 pt-20 border-t border-dark-blue/10"
+                >
+                    <h3 className="font-serif text-3xl mb-12 text-center">More From Our Blog</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-                        {bottomPosts.map((post) => (
-                            <Link key={post.id} to={`/blog/${post.id}`} className="group">
-                                <div className="overflow-hidden mb-8 h-[450px] shadow-2xl rounded-sm">
-                                    <img
-                                        src={post.image}
-                                        alt={post.title}
-                                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-                                    />
-                                </div>
-                                <div className="flex justify-between items-center gap-6">
-                                    <div className="flex-1">
-                                        <h4 className="font-serif text-3xl mb-3 group-hover:text-primary transition-colors leading-tight">{post.title}</h4>
-                                        <span className="text-sm text-dark-blue/40 uppercase tracking-widest font-medium">{post.date}</span>
+                        {bottomPosts.map((post, idx) => (
+                            <motion.div
+                                key={post.id}
+                                initial={{ opacity: 0, x: idx % 2 === 0 ? -50 : 50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: false, amount: 0.2 }}
+                                transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: idx * 0.1 }}
+                            >
+                                <Link to={`/blog/${post.id}`} className="group">
+                                    <div className="overflow-hidden mb-8 h-[450px] shadow-2xl rounded-sm">
+                                        <img
+                                            src={post.image}
+                                            alt={post.title}
+                                            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                                        />
                                     </div>
-                                    <div className="w-14 h-14 rounded-full bg-dark-blue text-white flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-dark-blue transition-all duration-300 group-hover:-translate-y-1">
-                                        <ArrowUpRight size={22} />
+                                    <div className="flex justify-between items-center gap-6">
+                                        <div className="flex-1">
+                                            <h4 className="font-serif text-2xl mb-2 group-hover:text-primary transition-colors leading-tight">{post.title}</h4>
+                                            <span className="text-xs text-dark-blue/40 uppercase tracking-widest font-medium">{post.date}</span>
+                                        </div>
+                                        <div className="w-14 h-14 rounded-full bg-dark-blue text-white flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-dark-blue transition-all duration-300 group-hover:-translate-y-1">
+                                            <ArrowUpRight size={22} />
+                                        </div>
                                     </div>
-                                </div>
-                            </Link>
+                                </Link>
+                            </motion.div>
                         ))}
                     </div>
-                </div>
+                </motion.div>
             </div>
 
             <Contact />

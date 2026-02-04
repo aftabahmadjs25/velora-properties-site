@@ -11,10 +11,10 @@ const FeaturedProperties = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2">
                 {/* Left: Image */}
                 <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1 }}
+                    initial={{ opacity: 0, x: -100 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: false, amount: 0.2 }}
+                    transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
                     className="h-[600px] lg:h-auto min-h-[600px] relative order-2 lg:order-1"
                 >
                     <img
@@ -27,10 +27,10 @@ const FeaturedProperties = () => {
                 {/* Right: Content */}
                 <div className="flex flex-col justify-center px-6 py-20 lg:p-24 order-1 lg:order-2 bg-dark-blue">
                     <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8 }}
+                        initial={{ opacity: 0, x: 100 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: false, amount: 0.2 }}
+                        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
                     >
                         <span className="text-primary font-serif italic text-xl mb-4 block">Featured Properties</span>
                         <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl mb-8 leading-tight">
@@ -61,16 +61,38 @@ const FeaturedProperties = () => {
                             className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-dark-blue/20 group-hover:bg-dark-blue/10 transition-colors" />
-                        <div className="absolute bottom-0 left-0 w-full p-8 md:p-12 bg-gradient-to-t from-dark-blue/90 to-transparent">
-                            <span className="text-white/80 block mb-2">Manhattan, New York</span>
+                        <div className="absolute inset-x-0 bottom-0 w-full p-8 md:p-12 bg-gradient-to-t from-dark-blue/90 to-transparent flex flex-col gap-4 overflow-hidden">
+                            <motion.span
+                                initial={{ opacity: 0, x: -30 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: false, amount: 0.5 }}
+                                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                                className="text-white/80 block"
+                            >
+                                Manhattan, New York
+                            </motion.span>
                             <div className="flex justify-between items-end">
-                                <h3 className="font-serif text-3xl md:text-4xl">The Skyline Penthouse</h3>
-                                <div className="text-right">
+                                <motion.h3
+                                    initial={{ opacity: 0, x: -30 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: false, amount: 0.5 }}
+                                    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+                                    className="font-serif text-3xl md:text-4xl"
+                                >
+                                    The Skyline Penthouse
+                                </motion.h3>
+                                <motion.div
+                                    initial={{ opacity: 0, x: 30 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: false, amount: 0.5 }}
+                                    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+                                    className="text-right"
+                                >
                                     <span className="font-serif text-2xl md:text-3xl block mb-2">$8,500,000</span>
                                     <Link to="/property/skyline-penthouse" className="flex items-center gap-2 text-sm uppercase tracking-wider hover:text-primary transition-colors border border-white/30 rounded-full px-4 py-2 hover:bg-white hover:text-dark-blue cursor-pointer">
                                         View Details <ArrowUpRight size={14} />
                                     </Link>
-                                </div>
+                                </motion.div>
                             </div>
                         </div>
                     </div>
@@ -83,16 +105,38 @@ const FeaturedProperties = () => {
                             className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-dark-blue/20 group-hover:bg-dark-blue/10 transition-colors" />
-                        <div className="absolute bottom-0 left-0 w-full p-8 md:p-12 bg-gradient-to-t from-dark-blue/90 to-transparent">
-                            <span className="text-white/80 block mb-2">Malibu, California</span>
+                        <div className="absolute inset-x-0 bottom-0 w-full p-8 md:p-12 bg-gradient-to-t from-dark-blue/90 to-transparent flex flex-col gap-4 overflow-hidden">
+                            <motion.span
+                                initial={{ opacity: 0, x: -30 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: false, amount: 0.5 }}
+                                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                                className="text-white/80 block"
+                            >
+                                Malibu, California
+                            </motion.span>
                             <div className="flex justify-between items-end">
-                                <h3 className="font-serif text-3xl md:text-4xl">Coastal Modern Villa</h3>
-                                <div className="text-right">
+                                <motion.h3
+                                    initial={{ opacity: 0, x: -30 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: false, amount: 0.5 }}
+                                    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+                                    className="font-serif text-3xl md:text-4xl"
+                                >
+                                    Coastal Modern Villa
+                                </motion.h3>
+                                <motion.div
+                                    initial={{ opacity: 0, x: 30 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: false, amount: 0.5 }}
+                                    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+                                    className="text-right"
+                                >
                                     <span className="font-serif text-2xl md:text-3xl block mb-2">$12,750,000</span>
                                     <Link to="/property/coastal-modern-villa" className="flex items-center gap-2 text-sm uppercase tracking-wider hover:text-primary transition-colors border border-white/30 rounded-full px-4 py-2 hover:bg-white hover:text-dark-blue cursor-pointer">
                                         View Details <ArrowUpRight size={14} />
                                     </Link>
-                                </div>
+                                </motion.div>
                             </div>
                         </div>
                     </div>

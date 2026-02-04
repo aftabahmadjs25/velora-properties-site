@@ -51,9 +51,10 @@ const PropertyDetails = () => {
 
                 <div className="container relative z-10 mx-auto px-6 text-center">
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
+                        initial={{ opacity: 0, x: -100 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: false, amount: 0.3 }}
+                        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
                     >
                         <div className="flex items-center justify-center gap-2 text-primary text-sm uppercase tracking-widest mb-4">
                             <Link to="/" className="hover:text-white transition-colors">Home</Link>
@@ -74,9 +75,10 @@ const PropertyDetails = () => {
                 <div className="max-w-7xl mx-auto">
                     {/* Main Image - Now Expanded */}
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.98 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 1 }}
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: false, amount: 0.2 }}
+                        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
                         className="w-full h-[500px] md:h-[700px] mb-12 overflow-hidden shadow-2xl"
                     >
                         <img
@@ -93,13 +95,20 @@ const PropertyDetails = () => {
                         {/* Specs Boxes - Centered for better full-width look */}
                         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
                             {specs.map((spec, idx) => (
-                                <div key={idx} className="bg-secondary/10 p-8 flex flex-col items-center text-center justify-center border border-secondary/5 hover:border-primary/30 transition-colors">
+                                <motion.div
+                                    key={idx}
+                                    initial={{ opacity: 0, y: 30 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: false, amount: 0.3 }}
+                                    transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: idx * 0.1 }}
+                                    className="bg-secondary/10 p-8 flex flex-col items-center text-center justify-center border border-secondary/5 hover:border-primary/30 transition-colors"
+                                >
                                     <div className="text-primary mb-4 p-4 bg-white rounded-full shadow-sm">
                                         {spec.icon}
                                     </div>
                                     <span className="font-serif text-3xl mb-1">{spec.value}</span>
                                     <span className="text-xs uppercase tracking-widest text-dark-blue/50 font-medium">{spec.label}</span>
-                                </div>
+                                </motion.div>
                             ))}
                         </div>
 
@@ -123,12 +132,19 @@ const PropertyDetails = () => {
                             <h3 className="font-serif text-3xl mb-10">Features & Amenities</h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12">
                                 {property.features.map((feature, idx) => (
-                                    <div key={idx} className="flex items-center gap-4">
+                                    <motion.div
+                                        key={idx}
+                                        initial={{ opacity: 0, x: -30 }}
+                                        whileInView={{ opacity: 1, x: 0 }}
+                                        viewport={{ once: false, amount: 0.5 }}
+                                        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: (idx % 2) * 0.1 }}
+                                        className="flex items-center gap-4"
+                                    >
                                         <div className="p-1.5 bg-primary/20 rounded-sm">
                                             <Check size={16} className="text-primary" />
                                         </div>
                                         <span className="text-dark-blue/80 text-lg">{feature}</span>
-                                    </div>
+                                    </motion.div>
                                 ))}
                             </div>
                         </div>
@@ -160,7 +176,13 @@ const PropertyDetails = () => {
                     {/* Right: Interested & Agency Sidebars */}
                     <div className="lg:col-span-4 space-y-8 sticky top-[100px]">
                         {/* Contact Box */}
-                        <div className="bg-white p-10 shadow-2xl border border-dark-blue/5">
+                        <motion.div
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: false, amount: 0.3 }}
+                            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                            className="bg-white p-10 shadow-2xl border border-dark-blue/5"
+                        >
                             <h3 className="font-serif text-3xl mb-8 leading-tight">Interested In This Property?</h3>
                             <p className="text-dark-blue/60 text-sm mb-10">Contact our team for a private viewing or more information.</p>
 
@@ -178,16 +200,22 @@ const PropertyDetails = () => {
                                     <span className="text-dark-blue font-medium hover:text-primary transition-colors italic font-serif text-lg">+1 (212) 555-0198</span>
                                 </a>
                             </div>
-                        </div>
+                        </motion.div>
 
                         {/* Agency Box */}
-                        <div className="bg-white p-10 shadow-2xl border border-dark-blue/5">
+                        <motion.div
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: false, amount: 0.3 }}
+                            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+                            className="bg-white p-10 shadow-2xl border border-dark-blue/5"
+                        >
                             <h3 className="font-serif text-2xl mb-6 leading-tight">Velora Real Estate</h3>
                             <p className="text-primary font-bold text-sm uppercase tracking-widest mb-6">Luxury Property Specialists</p>
                             <p className="text-dark-blue/60 text-base leading-relaxed mb-0">
                                 With over 15 years of experience in luxury real estate, our team is dedicated to finding you the perfect home.
                             </p>
-                        </div>
+                        </motion.div>
                     </div>
 
                 </div>

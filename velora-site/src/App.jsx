@@ -11,7 +11,7 @@ import BlogDetails from './pages/BlogDetails';
 
 function App() {
   return (
-    <div className="min-h-screen bg-dark-blue text-white selection:bg-primary selection:text-dark-blue">
+    <div className="min-h-screen bg-dark-blue text-white selection:bg-primary selection:text-dark-blue overflow-x-hidden">
       <ScrollToTop />
       <BackToTop />
       <Header />

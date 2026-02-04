@@ -80,9 +80,10 @@ const Properties = () => {
 
                 <div className="container relative z-10 mx-auto px-6 text-center">
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
+                        initial={{ opacity: 0, x: -100 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: false, amount: 0.3 }}
+                        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
                     >
                         <div className="flex items-center justify-center gap-2 text-primary text-sm uppercase tracking-widest mb-4">
                             <Link to="/" className="hover:text-white transition-colors">Home</Link>
@@ -182,15 +183,17 @@ const Properties = () => {
                 <div className="container mx-auto px-6 space-y-20">
                     {currentItems.length > 0 ? (
                         currentItems.map((item) => (
-                            <motion.div
+                            <div
                                 key={item.id}
-                                initial={{ opacity: 0, y: 40 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.8 }}
                                 className="group"
                             >
-                                <div className="relative overflow-hidden mb-8 h-[500px] md:h-[600px]">
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    whileInView={{ opacity: 1 }}
+                                    viewport={{ once: false, amount: 0.2 }}
+                                    transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                                    className="relative overflow-hidden mb-8 h-[500px] md:h-[600px]"
+                                >
                                     <img
                                         src={item.image}
                                         alt={item.title}
@@ -199,20 +202,32 @@ const Properties = () => {
                                     <div className="absolute inset-0 bg-gradient-to-t from-dark-blue/90 via-dark-blue/20 to-transparent" />
 
                                     <div className="absolute bottom-0 left-0 w-full p-8 md:p-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 md:gap-0">
-                                        <div className="text-white">
+                                        <motion.div
+                                            initial={{ opacity: 0, x: -50 }}
+                                            whileInView={{ opacity: 1, x: 0 }}
+                                            viewport={{ once: false, amount: 0.1 }}
+                                            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+                                            className="text-white"
+                                        >
                                             <span className="text-primary italic font-serif text-base md:text-lg mb-1 md:mb-2 block">{item.location}</span>
                                             <h3 className="font-serif text-3xl md:text-5xl">{item.title}</h3>
-                                        </div>
+                                        </motion.div>
 
-                                        <div className="text-left md:text-right">
+                                        <motion.div
+                                            initial={{ opacity: 0, x: 50 }}
+                                            whileInView={{ opacity: 1, x: 0 }}
+                                            viewport={{ once: false, amount: 0.1 }}
+                                            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+                                            className="text-left md:text-right"
+                                        >
                                             <span className="font-serif text-3xl md:text-5xl block mb-2 md:mb-4">{item.price}</span>
                                             <Link to={`/property/${item.id}`} className="flex items-center gap-2 text-sm uppercase tracking-wider hover:text-primary transition-colors group/btn cursor-pointer">
                                                 View Details <ArrowUpRight className="group-hover/btn:-translate-y-1 transition-transform" size={16} />
                                             </Link>
-                                        </div>
+                                        </motion.div>
                                     </div>
-                                </div>
-                            </motion.div>
+                                </motion.div>
+                            </div>
                         ))
                     ) : (
                         <div className="py-40 text-center">

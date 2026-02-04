@@ -24,9 +24,10 @@ const Hero = () => {
             {/* Content Container */}
             <div className="relative z-10 container mx-auto px-6 flex flex-col justify-center items-center text-center pt-24 md:pt-0 pb-10 md:pb-0 grow">
                 <motion.h1
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
+                    initial={{ opacity: 0, x: -100 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: false, amount: 0.3 }}
+                    transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
                     className="font-serif text-4xl md:text-6xl lg:text-7xl text-white mb-6 leading-tight"
                 >
                     Discover Extraordinary <br />
@@ -34,18 +35,20 @@ const Hero = () => {
                 </motion.h1>
 
                 <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
+                    initial={{ opacity: 0, x: 100 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: false, amount: 0.3 }}
+                    transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
                     className="text-white/90 text-base md:text-xl max-w-2xl font-light mb-8 md:mb-12"
                 >
                     We curate the world's most exceptional properties, connecting discerning clients with homes that inspire and captivate.
                 </motion.p>
 
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.6 }}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: false, amount: 0.3 }}
+                    transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
                     className="flex flex-col md:flex-row gap-4 w-full md:w-auto px-4 md:px-0"
                 >
                     <Link to="/properties" className="bg-primary text-dark-blue px-8 py-4 text-sm font-medium hover:bg-white transition-all cursor-pointer w-full md:w-auto min-w-[200px] flex items-center justify-center">
@@ -73,23 +76,44 @@ const Hero = () => {
             <div className="relative z-20 mt-12 md:absolute md:bottom-12 md:left-0 md:w-full md:mt-0">
                 <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center md:items-end gap-8 md:gap-0">
                     <div className="flex gap-8 md:gap-12 text-white">
-                        <div className="text-center md:text-left">
-                            <span className="font-serif text-3xl md:text-4xl block">$2.5B+</span>
-                            <span className="text-sm text-white/70">Happy<br />Home owners</span>
-                        </div>
-                        <div className="h-auto w-px bg-white/20"></div>
-                        <div className="text-center md:text-left">
-                            <span className="font-serif text-3xl md:text-4xl block">30+</span>
-                            <span className="text-sm text-white/70">Properties<br />Sold</span>
-                        </div>
+                        <motion.div
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: false, amount: 0.1 }}
+                            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.5 }}
+                            className="text-center md:text-left"
+                        >
+                            <span className="font-serif text-3xl md:text-4xl block font-light lg:text-5xl">$2.5B+</span>
+                            <span className="text-sm text-white/50 lowercase tracking-wider">Happy<br />Home owners</span>
+                        </motion.div>
+
+                        <div className="h-auto w-px bg-white/10 my-4 md:my-0"></div>
+
+                        <motion.div
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: false, amount: 0.1 }}
+                            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.6 }}
+                            className="text-center md:text-left"
+                        >
+                            <span className="font-serif text-3xl md:text-4xl block font-light lg:text-5xl">30+</span>
+                            <span className="text-sm text-white/50 lowercase tracking-wider">Properties<br />Sold</span>
+                        </motion.div>
                     </div>
 
                     {/* Small preview images */}
                     <div className="flex gap-4">
                         {[preview1, preview2, preview3].map((img, i) => (
-                            <div key={i} className="w-24 md:w-32 h-16 md:h-20 overflow-hidden border-2 border-white/10 hover:border-primary transition-colors">
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, x: 50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: false, amount: 0.1 }}
+                                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.7 + (i * 0.1) }}
+                                className="w-24 md:w-32 h-16 md:h-20 overflow-hidden border border-white/10 hover:border-primary transition-colors"
+                            >
                                 <img src={img} alt="Preview" className="w-full h-full object-cover" />
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
                 </div>

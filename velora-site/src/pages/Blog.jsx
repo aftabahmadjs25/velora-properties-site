@@ -56,9 +56,10 @@ const Blog = () => {
 
                 <div className="container relative z-10 mx-auto px-6 text-center">
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
+                        initial={{ opacity: 0, x: -100 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        viewport={{ once: false, amount: 0.3 }}
+                        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
                     >
                         <div className="flex items-center justify-center gap-2 text-primary text-sm uppercase tracking-widest mb-4">
                             <Link to="/" className="hover:text-white transition-colors">Home</Link>
@@ -78,10 +79,10 @@ const Blog = () => {
                             {currentPosts.map((post, index) => (
                                 <motion.div
                                     key={post.id}
-                                    initial={{ opacity: 0, y: 30 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 0.8, delay: (index % 2) * 0.2 }}
+                                    initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: false, amount: 0.2 }}
+                                    transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: (index % 2) * 0.1 }}
                                     className="group cursor-pointer"
                                 >
                                     <Link to={`/blog/${post.id}`}>

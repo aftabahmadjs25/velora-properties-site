@@ -62,9 +62,10 @@ const Testimonials = () => {
         <section className="py-24 bg-light-gray text-dark-blue overflow-hidden">
             <div className="container mx-auto px-6 text-center max-w-4xl">
                 <motion.h2
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    initial={{ opacity: 0, x: -100 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: false, amount: 0.3 }}
+                    transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
                     className="font-serif text-4xl md:text-5xl mb-16"
                 >
                     Testimonials

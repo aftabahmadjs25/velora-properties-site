@@ -23,21 +23,35 @@ const Blog = () => {
     return (
         <section id="blog" className="py-24 bg-white text-dark-blue">
             <div className="container mx-auto px-6">
-                <div className="text-center mb-16">
-                    <span className="text-primary font-serif italic text-xl mb-4 block">Blog</span>
-                    <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-dark-blue">
+                <div className="text-center mb-16 px-6">
+                    <motion.span
+                        initial={{ opacity: 0, x: -50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: false, amount: 0.2 }}
+                        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                        className="text-primary font-serif italic text-xl mb-4 block"
+                    >
+                        Blog
+                    </motion.span>
+                    <motion.h2
+                        initial={{ opacity: 0, x: 100 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: false, amount: 0.2 }}
+                        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+                        className="font-serif text-4xl md:text-5xl lg:text-6xl text-dark-blue"
+                    >
                         Explore Our Blogs
-                    </h2>
+                    </motion.h2>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
                     {posts.map((post, index) => (
                         <motion.div
                             key={post.id}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8, delay: index * 0.2 }}
+                            initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: false, amount: 0.2 }}
+                            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: index * 0.1 }}
                             className="group cursor-pointer"
                         >
                             <Link to="/blog">
