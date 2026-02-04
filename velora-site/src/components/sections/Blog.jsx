@@ -7,13 +7,13 @@ import blog2 from "../../assets/images/image-7.jpg";
 const Blog = () => {
     const posts = [
         {
-            id: 1,
+            id: "investment-insights",
             title: "How To Choose The Right Property For Long-Term Value",
             date: "5 Dec 2025",
             image: blog1,
         },
         {
-            id: 2,
+            id: "first-home-mistakes",
             title: "Top Mistakes To Avoid When Buying Your First Home",
             date: "5 Dec 2025",
             image: blog2,
